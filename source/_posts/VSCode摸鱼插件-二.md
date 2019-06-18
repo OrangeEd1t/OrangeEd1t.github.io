@@ -2,11 +2,11 @@
 title: VSCode摸鱼插件-二
 date: 2019-05-20 10:19:21
 categories: 
--VSCode
+- VSCode
 tags: 
--教程
--TypeScript
--VSCode
+- 教程
+- TypeScript
+- VSCode
 ---
 
 # 写在前面
