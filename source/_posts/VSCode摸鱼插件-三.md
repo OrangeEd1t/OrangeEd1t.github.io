@@ -1,7 +1,7 @@
 ---
 title: VSCode摸鱼插件-三
 date: 2019-06-02 14:45:43
-categories: 
+categories:
 - VSCode
 tags:
 - 教程
@@ -51,4 +51,3 @@ vsCode的插件发布也是非常的建单的，主要有3种方法：
 采用什么方式发布，可以根据自己的需要来决定。
 
 具体参考该[文章](https://www.cnblogs.com/liuxianan/p/vscode-plugin-publish.html)
-
