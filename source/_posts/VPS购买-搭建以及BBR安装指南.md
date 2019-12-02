@@ -118,7 +118,8 @@ ssh 用户名@ip地址
 
 这样表示已经登录成功了。
 
-## 安装ShadowSocks服务端
+## Shadowsocks版
+### 安装Shadowsocks服务端
 
 在服务器上依次执行
 
@@ -154,7 +155,7 @@ sh shadowsocks-all.sh
 
 至此，我们的ShadowSocks的服务端就安装完毕了。下面我们安装客户端，安装好客户端后，我们就能使用啦！
 
-## 安装ShadowSocks客户端
+### 安装ShadowSocks客户端
 
 常规版 Windows 客户端
 <https://github.com/shadowsocks/shadowsocks-windows/releases>
@@ -171,6 +172,96 @@ https://github.com/shadowsocksrr/shadowsocksr-csharp/releases
 依次输入你的ip地址，端口，密码以及加密方式，然后点击确定
 
 最后，我们再将【启用系统代理】和【系统代理模式/全局模式】勾选上，就大功告成啦！
+
+## v2ray版(19-12-2更新)
+
+### 安装v2ray服务端
+
+在服务器上依次执行
+
+``` bash
+yum install curl vim -y
+bash <(curl -L -s https://install.direct/go.sh)
+```
+
+![v2ray1](VPS购买-搭建以及BBR安装指南/v2ray1.png)
+
+> 当出现上图的界面时，表示安装成功，此时需要复制出图中红框标注的信息备用。
+
+此时我们仅安装好了v2ray，但并未启动，接下来我们来启动v2ray。
+
+依次执行命令
+
+``` bash
+systemctl start v2ray
+systemctl status v2ray
+```
+
+![v2ray2](VPS购买-搭建以及BBR安装指南/v2ray2.png)
+
+> 出现上图界面时，表示v2ray已成功启动了。
+
+接下来我们就需要关闭防火墙了
+
+> *如果你的服务器上有重要资料，那么请不要关闭防火墙，建议你百度一下【你的系统+防火墙开放端口】（例如搜索：CentOS 7 防火墙开放端口）来学习如何放行端口，只要放行刚刚安装完成提示的端口即可，命令也简单，但是不同的系统不一定一样，这里就不展开了。*
+
+执行以下命令（3组只需要执行一组即可，如果报错就换一组执行）
+
+``` bash
+systemctl stop firewalld
+systemctl disable firewalld
+ 
+servcie iptables stop
+chkconfig iptables off
+ 
+ufw disable
+```
+
+至此，我们v2ray的服务端就安装完成啦，接下来是客户端的安装与配置。
+
+###  安装v2ray客户端
+
+我这里整理了一些不同平台的客户端
+
+* v2rayW（Windows）： [Github](https://github.com/Cenmrev/V2RayW/releases)
+* V2RayN（Windows）： [Github](https://github.com/2dust/v2rayN/releases)
+* v2rayX（macOS）： [Github](https://github.com/Cenmrev/V2RayX/releases)
+* V2RayU（macOS）： [Github](https://github.com/yanue/V2rayU/releases)
+* Shadowrocket（iOS）： [itunes](https://itunes.apple.com/us/app/shadowrocket/id932747118?mt=8)
+* i2Ray（iOS）： [itunes](https://itunes.apple.com/us/app/i2ray/id1445270056?mt=8)
+* Quantumult（iOS）： [itunes](https://itunes.apple.com/us/app/quantumult/id1252015438?mt=8)
+* BifrostV（Android）： [Play商店](https://play.google.com/store/apps/details?id=com.github.dawndiy.bifrostv) | [ApkPure](https://apkpure.com/bifrostv/com.github.dawndiy.bifrostv)
+* V2RayNG（Android）： [Play商店](https://play.google.com/store/apps/details?id=com.v2ray.ang) | [Github](https://github.com/2dust/v2rayNG/releases)
+
+由于版本众多，我就不一一展示了，这里就用windows的客户端v2rayN展示一下就好了，其实配置都是大同小异的。
+
+在github上面下载完成后解压
+
+![v2ray3](VPS购买-搭建以及BBR安装指南/v2ray3.png)
+
+> 文件目录大致是这样，双击运行红框的.exe文件
+
+![v2ray4](VPS购买-搭建以及BBR安装指南\v2ray4.png)
+
+> 启动成功后，在任务栏会有这样一个图标，双击图标显示软件主界面
+
+![v2ray5](VPS购买-搭建以及BBR安装指南\v2ray5.png)
+
+> 点击服务器->添加[vmess]服务器
+
+![v2ray6](VPS购买-搭建以及BBR安装指南\v2ray6.png)
+
+> 依次输入：服务器IP、端口、用户ID、额外ID、加密方式、传输协议等信息。
+
+**端口：安装完成时让你保存的PORT的值**
+
+**用户ID：安装完成时让你保存的UUID的值**
+
+**额外ID、加密方式和传输协议按照图片中填写即可**
+
+![v2ray7](VPS购买-搭建以及BBR安装指南\v2ray7.png)
+
+配置完成后，回车启用就可以开始网上重浪了。
 
 # 安装BBR
 
