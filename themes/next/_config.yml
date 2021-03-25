@@ -118,9 +118,9 @@ index_with_subtitle: false
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 menu:
   home: / || home
-  about: /about/ || user
+  #about: /about/ || user
   #tags: /tags/ || tags
-  categories: /categories/ || th
+  #categories: /categories/ || th
   archives: /archives/ || archive
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
@@ -147,7 +147,7 @@ scheme: Muse
 # ---------------------------------------------------------------
 
 # Posts / Categories / Tags in sidebar.
-site_state: true
+site_state: false
 
 # Social Links.
 # Usage: `Key: permalink || icon`
@@ -314,10 +314,10 @@ codeblock:
 wechat_subscriber:
   enabled: true
   qcode: /images/wechat-qcode.jpg
-  description: 我很懒，不会推送什么东西...
+  description: 我很懒，不会推送什么东西
 
 # Reward
-reward_comment: 只要你良心能过得去，打不打赏都无所谓...
+reward_comment: 如果有帮助到您，那是最好的
 wechatpay: /images/wechatpay.jpg
 alipay: /images/alipay.jpg
 #bitcoin: /images/bitcoin.png
