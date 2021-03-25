@@ -1,12 +1,6 @@
 ---
 title: Next主题配置
 date: 2018-10-26 09:36:26
-categories: 
-- Blog
-tags: 
-- Blog
-- 教程
-- 配置
 ---
 
 ​	在[搭建Hexo博客(搭建+绑定域名+多终端同步)](https://blog.orangehub.cn/2018/10/24/%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/#more)中我们学会了如何搭建一个Hexo博客。这篇，我们主要讲解Hexo的Next主题配置(别问为什么是这个主题，大家都在用....)，不废话了，进入正题。

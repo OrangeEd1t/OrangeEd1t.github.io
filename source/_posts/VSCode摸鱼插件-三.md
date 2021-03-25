@@ -1,12 +1,6 @@
 ---
 title: VSCode摸鱼插件-三
 date: 2019-06-02 14:45:43
-categories: 
-- VSCode
-tags: 
-- 教程
-- TypeScript
-- VSCode
 ---
 
 # 写在前面
