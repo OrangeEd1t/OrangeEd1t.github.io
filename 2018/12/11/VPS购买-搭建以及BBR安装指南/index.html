@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: false,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="由于工作需要，很多时候我们可能需要用科学上网的方式去查资料。科学上网的途径主要有以下几种：  购买VPN  免费的VPN  搭建vps服务器 三种方式各有各的优缺点，主要还是看你怎么选择咯~ 通过vpn上网的优点就是操作简单，比较适合不是经常使用科学上网的人，但是也有缺点。缺点就是容易被封，会被限制速度。 PS：免费VPN与付费VPN的主要区别在于安全性，也就是说免费的可能会泄露的个人信息。但是！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VPS购买+搭建以及BBR安装指南">
+<meta property="og:url" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="OrangeEd1t">
+<meta property="og:description" content="由于工作需要，很多时候我们可能需要用科学上网的方式去查资料。科学上网的途径主要有以下几种：  购买VPN  免费的VPN  搭建vps服务器 三种方式各有各的优缺点，主要还是看你怎么选择咯~ 通过vpn上网的优点就是操作简单，比较适合不是经常使用科学上网的人，但是也有缺点。缺点就是容易被封，会被限制速度。 PS：免费VPN与付费VPN的主要区别在于安全性，也就是说免费的可能会泄露的个人信息。但是！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544518834038.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544519242815.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544519460115.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544519710470.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544519790062.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520138453.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520311688.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520544494.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520682232.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520954626.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544521317476.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599074840.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599114008.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599239382.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599281527.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599370670.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599424944.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599985925.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/v2ray1.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/v2ray2.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/v2ray3.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%5Cv2ray4.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%5Cv2ray5.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%5Cv2ray6.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%5Cv2ray7.png">
+<meta property="article:published_time" content="2018-12-11T08:14:33.000Z">
+<meta property="article:modified_time" content="2021-03-25T08:36:18.819Z">
+<meta property="article:author" content="OrangeEd1t">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544518834038.png">
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="OrangeEd1t" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://blog.orangehub.cn/2018/12/11/VPS购买-搭建以及BBR安装指南/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>VPS购买+搭建以及BBR安装指南 | OrangeEd1t</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">OrangeEd1t</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.orangehub.cn/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="OrangeEd1t">
+      <meta itemprop="description" content="只要快乐！">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OrangeEd1t">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">VPS购买+搭建以及BBR安装指南
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-11 16:14:33" itemprop="dateCreated datePublished" datetime="2018-12-11T16:14:33+08:00">2018-12-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-25 16:36:18" itemprop="dateModified" datetime="2021-03-25T16:36:18+08:00">2021-03-25</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>由于工作需要，很多时候我们可能需要用科学上网的方式去查资料。科学上网的途径主要有以下几种：</p>
+<ul>
+<li><p>购买VPN</p>
+</li>
+<li><p>免费的VPN</p>
+</li>
+<li><p>搭建vps服务器</p>
+<p>三种方式各有各的优缺点，主要还是看你怎么选择咯~</p>
+<p>通过vpn上网的优点就是操作简单，比较适合不是经常使用科学上网的人，但是也有缺点。缺点就是容易被封，会被限制速度。</p>
+<p>PS：免费VPN与付费VPN的主要区别在于安全性，也就是说免费的可能会泄露的个人信息。但是！试问谁在网上不是裸奔呢？</p>
+<p>这里我主要讲第三种方式——搭建VPS服务器</p>
+</li>
+</ul>
+<h1 id="购买服务器"><a href="#购买服务器" class="headerlink" title="购买服务器"></a>购买服务器</h1><p>  这里推荐几个个国外的VPS服务器厂商</p>
+<ul>
+<li><p><a href="https://www.vultr.com/?ref=7234693" target="_blank" rel="noopener">Vultr</a></p>
+</li>
+<li><p><a href="https://bwh8.net/" target="_blank" rel="noopener">Bandwagonhost(搬瓦工)</a></p>
+<p>这两个算是比较不错的vps服务器厂商，因为我购买的时候搬瓦工已经没有了19.9刀一年的服务器了，所以我选择了<a href="https://www.vultr.com/?ref=7234693" target="_blank" rel="noopener">Vultr</a>，支持支付宝和微信付款，还是比较方便的。 </p>
+</li>
+</ul>
+<h2 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h2><p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544518834038.png" alt="1544518834038"></p>
+<p>填写你的e-mail地址和密码，然后创建一个账号，可能会需要你验证邮箱什么的，跟着操作就好咯，这里就不赘述了。</p>
+<h2 id="激活账号"><a href="#激活账号" class="headerlink" title="激活账号"></a>激活账号</h2><p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544519242815.png" alt="1544519242815"></p>
+<p>登陆进去后点击左边菜单栏的Billing 选择 Alipay(支付宝)或者 WeChat Pay(微信)付款10刀才能激活账户，差不多够用两个多月左右(3.5刀/月)，激活完成后点击右上角的进行服务器的购买</p>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544519460115.png" alt="1544519460115"></p>
+<h2 id="服务器选择"><a href="#服务器选择" class="headerlink" title="服务器选择"></a>服务器选择</h2><p>主要分为3步：选择服务器位置，选择系统，选择配置</p>
+<h3 id="选择服务器位置"><a href="#选择服务器位置" class="headerlink" title="选择服务器位置"></a>选择服务器位置</h3><p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544519710470.png" alt="1544519710470"></p>
+<blockquote>
+<p>理论上：离你越近越好，通常选择tokyo节点</p>
+</blockquote>
+<h3 id="选择系统"><a href="#选择系统" class="headerlink" title="选择系统"></a>选择系统</h3><p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544519790062.png" alt="1544519790062"></p>
+<blockquote>
+<p>推荐选择 CentOs7</p>
+</blockquote>
+<h3 id="选择配置"><a href="#选择配置" class="headerlink" title="选择配置"></a>选择配置</h3><p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520138453.png" alt="1544520138453"></p>
+<blockquote>
+<p>由于2.5刀的配置只有ipv6，我们这里选择3.5刀的配置，这两个配置的区别就是一个没有ipv4一个有ipv4，由于ipv6不稳定，建议选择3.5刀的配置。</p>
+</blockquote>
+<h3 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h3><p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520311688.png" alt="1544520311688"></p>
+<blockquote>
+<p>选择好了之后，我们点击下面的 Deploy Now 就OK啦~</p>
+</blockquote>
+<p>至此，服务器就已经购买完成啦，我们回到控制台界面。</p>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520544494.png" alt="1544520544494"></p>
+<p>这里就是你购买的服务器啦，下面我们开始搭建VPS</p>
+<h1 id="搭建VPS"><a href="#搭建VPS" class="headerlink" title="搭建VPS"></a>搭建VPS</h1><p>点击你的服务器，进入服务器详细页面</p>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520682232.png" alt="1544520682232"></p>
+<blockquote>
+<p>IP Address:你的IP地址</p>
+<p>Username：用户名</p>
+<p>Password：密码</p>
+<p>小眼睛：查看密码</p>
+</blockquote>
+<h2 id="登陆服务器"><a href="#登陆服务器" class="headerlink" title="登陆服务器"></a>登陆服务器</h2><p>我们在电脑上(win10)呼出cmd（win+r =&gt; 输入cmd =&gt; 回车）</p>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544520954626.png" alt="1544520954626"></p>
+<p>打开就是这样的，下面我们通过ssh登入服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 用户名@ip地址</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>用户名和ip地址需要你自己填写</p>
+</blockquote>
+<p>输入完成后需要输入密码</p>
+<blockquote>
+<p>密码不会显示出</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544521317476.png" alt="1544521317476"></p>
+<p>这样表示已经登录成功了。</p>
+<h2 id="Shadowsocks版"><a href="#Shadowsocks版" class="headerlink" title="Shadowsocks版"></a>Shadowsocks版</h2><h3 id="安装Shadowsocks服务端"><a href="#安装Shadowsocks服务端" class="headerlink" title="安装Shadowsocks服务端"></a>安装Shadowsocks服务端</h3><p>在服务器上依次执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh</span><br><span class="line"></span><br><span class="line">sh shadowsocks-all.sh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599074840.png" alt="1544599074840"></p>
+<blockquote>
+<p>选择你要安装的Shadowsocks版本，默认Python版</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599114008.png" alt="1544599114008"></p>
+<blockquote>
+<p>输入你的ShadowSocks密码，默认 teddysun.com</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599239382.png" alt="1544599239382"></p>
+<blockquote>
+<p>选择你的端口，默认10120端口</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599281527.png" alt="1544599281527"></p>
+<blockquote>
+<p>选择你的混淆方式，默认aes-256-gcm，这里建议选择aes-256-cfb的方式，只需要输入对应的序号即可</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599370670.png" alt="1544599370670"></p>
+<blockquote>
+<p>全部选择完成后，再按下回车就开始安装了。</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599424944.png" alt="1544599424944"></p>
+<blockquote>
+<p>安装完成后，脚本提示安装成功。</p>
+</blockquote>
+<p>至此，我们的ShadowSocks的服务端就安装完毕了。下面我们安装客户端，安装好客户端后，我们就能使用啦！</p>
+<h3 id="安装ShadowSocks客户端"><a href="#安装ShadowSocks客户端" class="headerlink" title="安装ShadowSocks客户端"></a>安装ShadowSocks客户端</h3><p>常规版 Windows 客户端<br><a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-windows/releases</a></p>
+<p>ShadowsocksR 版 Windows 客户端<br><a href="https://github.com/shadowsocksrr/shadowsocksr-csharp/releases" target="_blank" rel="noopener">https://github.com/shadowsocksrr/shadowsocksr-csharp/releases</a></p>
+<p>客户端安装好之后，我们来对客户端进行配置</p>
+<p>打开你下载的客户端，在你的控制栏找到一个小飞机的图标，然后单击鼠标右键=&gt;服务器=&gt;编辑服务器=&gt;添加</p>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/1544599985925.png" alt="1544599985925"></p>
+<p>依次输入你的ip地址，端口，密码以及加密方式，然后点击确定</p>
+<p>最后，我们再将【启用系统代理】和【系统代理模式/全局模式】勾选上，就大功告成啦！</p>
+<h2 id="v2ray版-19-12-2更新"><a href="#v2ray版-19-12-2更新" class="headerlink" title="v2ray版(19-12-2更新)"></a>v2ray版(19-12-2更新)</h2><h3 id="安装v2ray服务端"><a href="#安装v2ray服务端" class="headerlink" title="安装v2ray服务端"></a>安装v2ray服务端</h3><p>在服务器上依次执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install curl vim -y</span><br><span class="line">bash &lt;(curl -L -s https://install.direct/go.sh)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/v2ray1.png" alt="v2ray1"></p>
+<blockquote>
+<p>当出现上图的界面时，表示安装成功，此时需要复制出图中红框标注的信息备用。</p>
+</blockquote>
+<p>此时我们仅安装好了v2ray，但并未启动，接下来我们来启动v2ray。</p>
+<p>依次执行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start v2ray</span><br><span class="line">systemctl status v2ray</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/v2ray2.png" alt="v2ray2"></p>
+<blockquote>
+<p>出现上图界面时，表示v2ray已成功启动了。</p>
+</blockquote>
+<p>接下来我们就需要关闭防火墙了</p>
+<blockquote>
+<p><em>如果你的服务器上有重要资料，那么请不要关闭防火墙，建议你百度一下【你的系统+防火墙开放端口】（例如搜索：CentOS 7 防火墙开放端口）来学习如何放行端口，只要放行刚刚安装完成提示的端口即可，命令也简单，但是不同的系统不一定一样，这里就不展开了。</em></p>
+</blockquote>
+<p>执行以下命令（3组只需要执行一组即可，如果报错就换一组执行）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line"> </span><br><span class="line">servcie iptables stop</span><br><span class="line">chkconfig iptables off</span><br><span class="line"> </span><br><span class="line">ufw <span class="built_in">disable</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，我们v2ray的服务端就安装完成啦，接下来是客户端的安装与配置。</p>
+<h3 id="安装v2ray客户端"><a href="#安装v2ray客户端" class="headerlink" title="安装v2ray客户端"></a>安装v2ray客户端</h3><p>我这里整理了一些不同平台的客户端</p>
+<ul>
+<li>v2rayW（Windows）： <a href="https://github.com/Cenmrev/V2RayW/releases" target="_blank" rel="noopener">Github</a></li>
+<li>V2RayN（Windows）： <a href="https://github.com/2dust/v2rayN/releases" target="_blank" rel="noopener">Github</a></li>
+<li>v2rayX（macOS）： <a href="https://github.com/Cenmrev/V2RayX/releases" target="_blank" rel="noopener">Github</a></li>
+<li>V2RayU（macOS）： <a href="https://github.com/yanue/V2rayU/releases" target="_blank" rel="noopener">Github</a></li>
+<li>Shadowrocket（iOS）： <a href="https://itunes.apple.com/us/app/shadowrocket/id932747118?mt=8" target="_blank" rel="noopener">itunes</a></li>
+<li>i2Ray（iOS）： <a href="https://itunes.apple.com/us/app/i2ray/id1445270056?mt=8" target="_blank" rel="noopener">itunes</a></li>
+<li>Quantumult（iOS）： <a href="https://itunes.apple.com/us/app/quantumult/id1252015438?mt=8" target="_blank" rel="noopener">itunes</a></li>
+<li>BifrostV（Android）： <a href="https://play.google.com/store/apps/details?id=com.github.dawndiy.bifrostv" target="_blank" rel="noopener">Play商店</a> | <a href="https://apkpure.com/bifrostv/com.github.dawndiy.bifrostv" target="_blank" rel="noopener">ApkPure</a></li>
+<li>V2RayNG（Android）： <a href="https://play.google.com/store/apps/details?id=com.v2ray.ang" target="_blank" rel="noopener">Play商店</a> | <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" rel="noopener">Github</a></li>
+</ul>
+<p>由于版本众多，我就不一一展示了，这里就用windows的客户端v2rayN展示一下就好了，其实配置都是大同小异的。</p>
+<p>在github上面下载完成后解压</p>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/v2ray3.png" alt="v2ray3"></p>
+<blockquote>
+<p>文件目录大致是这样，双击运行红框的.exe文件</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%5Cv2ray4.png" alt="v2ray4"></p>
+<blockquote>
+<p>启动成功后，在任务栏会有这样一个图标，双击图标显示软件主界面</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%5Cv2ray5.png" alt="v2ray5"></p>
+<blockquote>
+<p>点击服务器-&gt;添加[vmess]服务器</p>
+</blockquote>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%5Cv2ray6.png" alt="v2ray6"></p>
+<blockquote>
+<p>依次输入：服务器IP、端口、用户ID、额外ID、加密方式、传输协议等信息。</p>
+</blockquote>
+<p><strong>端口：安装完成时让你保存的PORT的值</strong></p>
+<p><strong>用户ID：安装完成时让你保存的UUID的值</strong></p>
+<p><strong>额外ID、加密方式和传输协议按照图片中填写即可</strong></p>
+<p><img src="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%5Cv2ray7.png" alt="v2ray7"></p>
+<p>配置完成后，回车启用就可以开始网上重浪了。</p>
+<h1 id="安装BBR"><a href="#安装BBR" class="headerlink" title="安装BBR"></a>安装BBR</h1><p>BBR 是 Google 提出的一种新型拥塞控制算法，可以使 Linux 服务器显著地提高吞吐量和减少 TCP 连接的延迟。</p>
+<p>BBR解决了两个问题：</p>
+<ul>
+<li><p>再有一定丢包率的网络链路上充分利用带宽。非常适合高延迟，高带宽的网络链路。</p>
+</li>
+<li><p>降低网络链路上的buffer占用率，从而降低延迟。非常适合慢速接入网络的用户。</p>
+</li>
+</ul>
+<p>下面让我们开始安装吧！</p>
+<p>安装之前我们需要先检查一下我们服务器的内核版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+
+<p>如果得到的结果是3.xx.x什么的话，那我们需要先升级下内核到4.10版本以上</p>
+<h2 id="升级内核"><a href="#升级内核" class="headerlink" title="升级内核"></a>升级内核</h2><p>依次输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span><br><span class="line">sudo rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm</span><br><span class="line">sudo yum --enablerepo=elrepo-kernel install kernel-ml -y</span><br></pre></td></tr></table></figure>
+
+<p>然后再检查下内核版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep kernel</span><br></pre></td></tr></table></figure>
+
+<p>如果输出结果显示 kernel-ml-4.19.xxxx 类似的内容说明安装成功</p>
+<h2 id="修改grub2引导"><a href="#修改grub2引导" class="headerlink" title="修改grub2引导"></a>修改grub2引导</h2><p>输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo egrep ^menuentry /etc/grub2.cfg | cut -f 2 -d \<span class="string">'</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CentOS Linux 7 Rescue 3432d83bf4954c0d8cafec87176dfc15 (4.19.8-1.el7.elrepo.x86_64)</span><br><span class="line">CentOS Linux (4.19.8-1.el7.elrepo.x86_64) 7 (Core)</span><br><span class="line">CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core)</span><br><span class="line">CentOS Linux (3.10.0-957.el7.x86_64) 7 (Core)</span><br><span class="line">CentOS Linux (0-rescue-84d6e1c3c43d427ab345edad898ac223) 7 (Core)</span><br></pre></td></tr></table></figure>
+
+<p>选择我们需要的内核 也就是 4.19.xxxx的那个</p>
+<p>输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo grub2-set-default 1</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong>这里的 1 代表的是上面输出的第二排，以此类推。第一排代表0</p>
+<p>重启：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>重启完成后，重新登录并重新运行命令来确认你是否使用了正确的内核：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+
+<p>如果得到 【4.19.8-1.el7.elrepo.x86_64 】之类的，则说明升级成功</p>
+<h2 id="开启BBR"><a href="#开启BBR" class="headerlink" title="开启BBR"></a>开启BBR</h2><p>输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'net.core.default_qdisc=fq'</span> | sudo tee -a /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'net.ipv4.tcp_congestion_control=bbr'</span> | sudo tee -a /etc/sysctl.conf</span><br><span class="line">sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>执行完成后我们来检查一下是否执行成功，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl net.ipv4.tcp_available_congestion_control</span><br><span class="line"><span class="comment"># 输出应为 net.ipv4.tcp_available_congestion_control = bbr cubic reno</span></span><br><span class="line">sudo sysctl -n net.ipv4.tcp_congestion_control</span><br><span class="line"><span class="comment"># 输出应为 bbr</span></span><br><span class="line">lsmod | grep bbr</span><br><span class="line"><span class="comment"># 输出应类似 tcp_bbr  16384  28</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，我们的所有配置已经完成了，现在可以surf the Internet 啦！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="OrangeEd1t 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="OrangeEd1t 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/" rel="next" title="Next主题配置">
+                <i class="fa fa-chevron-left"></i> Next主题配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/04/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%80/" rel="prev" title="VSCode摸鱼插件(一)">
+                VSCode摸鱼插件(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="OrangeEd1t" />
+            
+              <p class="site-author-name" itemprop="name">OrangeEd1t</p>
+              <p class="site-description motion-element" itemprop="description">只要快乐！</p>
+          </div>
+
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/orangeed1t" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:leedsym@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/orangeed1t" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.instagram.com/FaZe_OrangeEd1t/" target="_blank" title="Instagram"><i class="fa fa-fw fa-instagram"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#购买服务器"><span class="nav-number">1.</span> <span class="nav-text">购买服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册账号"><span class="nav-number">1.1.</span> <span class="nav-text">注册账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活账号"><span class="nav-number">1.2.</span> <span class="nav-text">激活账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器选择"><span class="nav-number">1.3.</span> <span class="nav-text">服务器选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选择服务器位置"><span class="nav-number">1.3.1.</span> <span class="nav-text">选择服务器位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择系统"><span class="nav-number">1.3.2.</span> <span class="nav-text">选择系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择配置"><span class="nav-number">1.3.3.</span> <span class="nav-text">选择配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交"><span class="nav-number">1.3.4.</span> <span class="nav-text">提交</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建VPS"><span class="nav-number">2.</span> <span class="nav-text">搭建VPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#登陆服务器"><span class="nav-number">2.1.</span> <span class="nav-text">登陆服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shadowsocks版"><span class="nav-number">2.2.</span> <span class="nav-text">Shadowsocks版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Shadowsocks服务端"><span class="nav-number">2.2.1.</span> <span class="nav-text">安装Shadowsocks服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装ShadowSocks客户端"><span class="nav-number">2.2.2.</span> <span class="nav-text">安装ShadowSocks客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v2ray版-19-12-2更新"><span class="nav-number">2.3.</span> <span class="nav-text">v2ray版(19-12-2更新)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装v2ray服务端"><span class="nav-number">2.3.1.</span> <span class="nav-text">安装v2ray服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装v2ray客户端"><span class="nav-number">2.3.2.</span> <span class="nav-text">安装v2ray客户端</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装BBR"><span class="nav-number">3.</span> <span class="nav-text">安装BBR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#升级内核"><span class="nav-number">3.1.</span> <span class="nav-text">升级内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改grub2引导"><span class="nav-number">3.2.</span> <span class="nav-text">修改grub2引导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启BBR"><span class="nav-number">3.3.</span> <span class="nav-text">开启BBR</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-OrangeEd1t"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">OrangeEd1t</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="true"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: false,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="​    在搭建Hexo博客(搭建+绑定域名+多终端同步)中我们学会了如何搭建一个Hexo博客。这篇，我们主要讲解Hexo的Next主题配置(别问为什么是这个主题，大家都在用….)，不废话了，进入正题。 准备工作安装主题我选择的Next，安装主题仅需一行代码，在你博客的根目录下打开Git Bash 输入： 1git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Next主题配置">
+<meta property="og:url" content="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="OrangeEd1t">
+<meta property="og:description" content="​    在搭建Hexo博客(搭建+绑定域名+多终端同步)中我们学会了如何搭建一个Hexo博客。这篇，我们主要讲解Hexo的Next主题配置(别问为什么是这个主题，大家都在用….)，不废话了，进入正题。 准备工作安装主题我选择的Next，安装主题仅需一行代码，在你博客的根目录下打开Git Bash 输入： 1git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540970156283.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540973091086.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540973457373.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540974064306.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540974446321.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540974795661.png">
+<meta property="article:published_time" content="2018-10-26T01:36:26.000Z">
+<meta property="article:modified_time" content="2021-03-25T08:36:18.815Z">
+<meta property="article:author" content="OrangeEd1t">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540970156283.png">
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="OrangeEd1t" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://blog.orangehub.cn/2018/10/26/Next主题配置/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Next主题配置 | OrangeEd1t</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">OrangeEd1t</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.orangehub.cn/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="OrangeEd1t">
+      <meta itemprop="description" content="只要快乐！">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OrangeEd1t">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Next主题配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-26 09:36:26" itemprop="dateCreated datePublished" datetime="2018-10-26T09:36:26+08:00">2018-10-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-25 16:36:18" itemprop="dateModified" datetime="2021-03-25T16:36:18+08:00">2021-03-25</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​    在<a href="https://blog.orangehub.cn/2018/10/24/%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/#more">搭建Hexo博客(搭建+绑定域名+多终端同步)</a>中我们学会了如何搭建一个Hexo博客。这篇，我们主要讲解Hexo的Next主题配置(别问为什么是这个主题，大家都在用….)，不废话了，进入正题。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h3><p>我选择的Next，安装主题仅需一行代码，在你博客的根目录下打开Git Bash 输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes / next</span><br></pre></td></tr></table></figure>
+
+<p>以上代码的意思是从<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">Next主题的GitHub项目</a>中将next下载到当前目录下的themes里面的next文件夹中。</p>
+<h3 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h3><p>修改你博客根目录下的配置文件<code>_config.yml</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line">theme: next <span class="comment">## 原来是 landscape，现在改成 next</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="主题设置"><a href="#主题设置" class="headerlink" title="主题设置"></a>主题设置</h2><h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><p>修改你博客根目录下的配置文件<code>_config.yml</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line">title: <span class="comment">#博客名称</span></span><br><span class="line">subtitle: <span class="comment">#字幕</span></span><br><span class="line">description: <span class="comment">#博客描述</span></span><br><span class="line">keywords: <span class="comment">#关键词</span></span><br><span class="line">author: <span class="comment">#作者</span></span><br><span class="line">language: <span class="comment">#语言</span></span><br><span class="line">timezone: <span class="comment">#时区</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：再修改language 选项时，后面跟随的值必须是你主题中所包含的值，一定不能自己随便写一个值进去。</strong></p>
+<p>查看路径：你博客根目录\themes\next\languages</p>
+<p><img src="/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540970156283.png" alt="1540970156283">PS：这里提一下，你使用<code>hexo s</code>预览的时候，你会发现是设置了语言之后界面还是英文，这个时候不要慌，使用<code>hexo clean</code>清理下database文件夹以及public文件夹就行了。然后再使用<code>hexo s</code> 预览。事实上，这个方法在遇到很多问题的时候都是通用的。</p>
+<h3 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h3><p>​    设置菜单包括三个部分，第一是菜单项（名称和链接），第二是菜单项的显示文本，第三是菜单项对应的图标。</p>
+<h4 id="第一步：设置菜单选项"><a href="#第一步：设置菜单选项" class="headerlink" title="第一步：设置菜单选项"></a>第一步：设置菜单选项</h4><p>​    进入你博客的next主题的根目录，你会发现在这里也会有一个<code>_config.yml</code>文件，真的是巧啊！这个文件主要是针对主题的设置。打开这个文件，找到<code>menu</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home <span class="comment">#主页</span></span><br><span class="line">  <span class="comment">#about: /about/ || user #关于我</span></span><br><span class="line">  tags: /tags/ || tags <span class="comment">#标签</span></span><br><span class="line">  <span class="comment">#categories: /categories/ || th #分类</span></span><br><span class="line">  <span class="comment">#archives: /archives/ || archive #文章归档</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar #时间表</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap #站点地图</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat #404页面</span></span><br></pre></td></tr></table></figure>
+
+<p>根据你的需要，取消掉注释，在博客主页就能够显示相应的菜单名称。</p>
+<h4 id="第二步：设置菜单图标"><a href="#第二步：设置菜单图标" class="headerlink" title="第二步：设置菜单图标"></a>第二步：设置菜单图标</h4><p>​    不要关闭这个文件，继续找到<code>menu_setting</code>（就在menu下面）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Enable&#x2F;Disable menu icons &#x2F; item badges.</span><br><span class="line">menu_settings:</span><br><span class="line">  icons: false #图标</span><br><span class="line">  badges: false #徽章</span><br></pre></td></tr></table></figure>
+
+<p>将icons的值改成true，就可以显示菜单图标了。</p>
+<h4 id="第三步：设置菜单页面"><a href="#第三步：设置菜单页面" class="headerlink" title="第三步：设置菜单页面"></a>第三步：设置菜单页面</h4><p>​    以上两步都完成后，你打开博客，选择其他菜单的时候，会发现根本打不开呢。不要慌，这种情况一般是因为你没有对应的页面，所以打不开呢。我们只需要在我们博客根目录打开 Git Bash并输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在你的网站根目录下面的source文件夹会分别生成tags、categories以及about文件夹。</p>
+<p>分别修改这tags和categories文件夹中的<code>index.md</code>文件，新增type属性，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2018-01-04 11:45:41</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>categories的修改类似。</p>
+<p>当你新建一篇博文的时候，增加上tags和categories属性值，就能在tags和categories界面检索到你的文章了。</p>
+<h3 id="设置侧边栏"><a href="#设置侧边栏" class="headerlink" title="设置侧边栏"></a>设置侧边栏</h3><p>同样，在你主题根目录打开<code>_config.yml</code>文件。</p>
+<p>​    默认情况下，侧栏仅在文章页面（拥有目录列表）时才显示，并放置于右侧位置。 可以通过修改 主题配置文件中的 <code>sidebar</code> 字段来控制侧栏的行为。侧栏的设置包括两个部分，其一是侧栏的位置， 其二是侧栏显示的时机。</p>
+<ol>
+<li>设置侧栏的位置，修改 <code>sidebar.position</code>的值，支持的选项有：</li>
+</ol>
+<ul>
+<li><code>left</code> - 靠左放置</li>
+<li><code>right</code>- 靠右放置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sidebar:</span><br><span class="line">  position: left12</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>设置侧栏显示的时机，修改<code>sidebar.display</code>的值，支持的选项有：</li>
+</ol>
+<ul>
+<li><code>post</code> - 默认行为，在文章页面（拥有目录列表）时显示</li>
+<li><code>always</code> - 在所有页面中都显示</li>
+<li><code>hide</code> - 在所有页面中都隐藏（可以手动展开）</li>
+<li><code>remove</code> - 完全移除</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sidebar:</span><br><span class="line">  display: post</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540973091086.png" alt="1540973091086"></p>
+<h3 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h3><p>在你主题根目录下找到并打卡<code>_config.yml</code>文件，接着找到并修改<code>avatar</code>字段，设置成头像的链接地址。其中，头像的链接地址可以是：</p>
+<table>
+<thead>
+<tr>
+<th align="center">地址</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">完整的互联网</td>
+<td align="center"><code>URI</code>:<code>http://example.com/avatar.png</code></td>
+</tr>
+<tr>
+<td align="center">站点内的地址</td>
+<td align="center">将头像放置主题目录下的<code>source/uploads/</code>（新建 <code>uploads</code> 目录若不存在） 配置为：<code>avatar: /uploads/avatar.png</code>或者 放置在 <code>source/images/ 目录下</code>, 配置为：<code>avatar: /images/avatar.png</code></td>
+</tr>
+</tbody></table>
+<p><img src="/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540973457373.png" alt="1540973457373"></p>
+<h3 id="设置侧边栏社交链接"><a href="#设置侧边栏社交链接" class="headerlink" title="设置侧边栏社交链接"></a>设置侧边栏社交链接</h3><p>侧栏社交链接的修改包含两个部分，第一是链接，第二是链接图标。 两者配置均在主题根目录的<code>_config.yml</code>文件中</p>
+<h4 id="第一步：设置链接"><a href="#第一步：设置链接" class="headerlink" title="第一步：设置链接"></a>第一步：设置链接</h4><p>链接放置在 <code>social</code>字段下，一行一个链接。其键值格式是 <code>显示文本: 链接地址</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Social Links.</span></span><br><span class="line"><span class="comment"># Usage: `Key: permalink || icon`</span></span><br><span class="line"><span class="comment"># Key is the link label showing to end users.</span></span><br><span class="line"><span class="comment"># Value before `||` delimeter is the target permalink.</span></span><br><span class="line"><span class="comment"># Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.</span></span><br><span class="line"><span class="comment">#social:</span></span><br><span class="line">  <span class="comment">#GitHub: https://github.com/yourname || github</span></span><br><span class="line">  <span class="comment">#E-Mail: mailto:yourname@gmail.com || envelope</span></span><br><span class="line">  <span class="comment">#Google: https://plus.google.com/yourname || google</span></span><br><span class="line">  <span class="comment">#Twitter: https://twitter.com/yourname || twitter</span></span><br><span class="line">  <span class="comment">#FB Page: https://www.facebook.com/yourname || facebook</span></span><br><span class="line">  <span class="comment">#VK Group: https://vk.com/yourname || vk</span></span><br><span class="line">  <span class="comment">#StackOverflow: https://stackoverflow.com/yourname || stack-overflow</span></span><br><span class="line">  <span class="comment">#YouTube: https://youtube.com/yourname || youtube</span></span><br><span class="line">  <span class="comment">#Instagram: https://www.instagram.com/yourname/ || instagram</span></span><br><span class="line">  <span class="comment">#Skype: skype:yourname?call|chat || skype</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540974064306.png" alt="1540974064306"></p>
+<h4 id="第二步：设置链接图标"><a href="#第二步：设置链接图标" class="headerlink" title="第二步：设置链接图标"></a>第二步：设置链接图标</h4><p>设定链接的图标，对应的字段是 <code>social_icons</code>。其键值格式是 匹配键:<code>Font Awesome</code>图标名称， 匹配键 与上一步所配置的链接的 显示文本 相同（大小写严格匹配），图标名称 是<code>Font Awesome</code>图标的名字（不必带 fa- 前缀）。 <code>enable</code> 选项用于控制是否显示图标，你可以设置成 false 来去掉图标。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">social_icons:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">  icons_only: <span class="literal">false</span> <span class="comment">#只显示图标</span></span><br><span class="line">  transition: <span class="literal">false</span></span><br><span class="line">  GitHub: github</span><br><span class="line">  E-Mail: envelope</span><br><span class="line">  Google: google</span><br><span class="line">  Twitter: twitter</span><br><span class="line">  Instagram: instagram</span><br><span class="line">  <span class="comment"># Dependencies: exturl: true in Tags Settings section below.</span></span><br><span class="line">  <span class="comment"># To encrypt links above use https://www.base64encode.org</span></span><br><span class="line">  <span class="comment"># Example encoded link: `GitHub: aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQ= || github`</span></span><br><span class="line">  exturl: <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540974446321.png" alt="1540974446321"></p>
+<h3 id="开启打赏功能"><a href="#开启打赏功能" class="headerlink" title="开启打赏功能"></a>开启打赏功能</h3><p>付费阅读时代越来越近，特此增加了打赏功能，支持微信打赏和支付宝打赏。 只需要主题配置文件，搜索<code>Reward</code>字段</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reward</span></span><br><span class="line"><span class="comment">#reward_comment: Donate comment here</span></span><br><span class="line">wechatpay: <span class="comment">#微信收款二维码图片地址</span></span><br><span class="line">alipay: <span class="comment">#支付宝收款二维码图片地址</span></span><br><span class="line">bitcoin: <span class="comment">#比特币收款二维码图片地址</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="设置站点建立时间"><a href="#设置站点建立时间" class="headerlink" title="设置站点建立时间"></a>设置站点建立时间</h3><p>同一个文件搜索<code>since</code>字段，并设置相应的年份</p>
+<p><img src="/2018/10/26/Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/1540974795661.png" alt="1540974795661"></p>
+<h3 id="订阅微信公众号"><a href="#订阅微信公众号" class="headerlink" title="订阅微信公众号"></a>订阅微信公众号</h3><p>​    在每篇文章的末尾显示微信公众号二维码，扫一扫，轻松订阅博客。在微信公众号平台下载您的二维码，并将它存放于博客<code>source/uploads/</code>目录下。搜索<code>wechat_subscriber</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Wechat Subscriber</span></span><br><span class="line">wechat_subscriber:</span><br><span class="line">  enabled: <span class="literal">true</span></span><br><span class="line">  qcode: <span class="comment">#二维码图片地址</span></span><br><span class="line">  description: <span class="comment">#描述</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="OrangeEd1t 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="OrangeEd1t 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/24/%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/" rel="next" title="搭建Hexo博客(搭建+绑定域名+多终端同步)">
+                <i class="fa fa-chevron-left"></i> 搭建Hexo博客(搭建+绑定域名+多终端同步)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/11/VPS%E8%B4%AD%E4%B9%B0-%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8ABBR%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" rel="prev" title="VPS购买+搭建以及BBR安装指南">
+                VPS购买+搭建以及BBR安装指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="OrangeEd1t" />
+            
+              <p class="site-author-name" itemprop="name">OrangeEd1t</p>
+              <p class="site-description motion-element" itemprop="description">只要快乐！</p>
+          </div>
+
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/orangeed1t" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:leedsym@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/orangeed1t" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.instagram.com/FaZe_OrangeEd1t/" target="_blank" title="Instagram"><i class="fa fa-fw fa-instagram"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装主题"><span class="nav-number">1.1.</span> <span class="nav-text">安装主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启用主题"><span class="nav-number">1.2.</span> <span class="nav-text">启用主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题设置"><span class="nav-number">2.</span> <span class="nav-text">主题设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置语言"><span class="nav-number">2.1.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置菜单"><span class="nav-number">2.2.</span> <span class="nav-text">设置菜单</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步：设置菜单选项"><span class="nav-number">2.2.1.</span> <span class="nav-text">第一步：设置菜单选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步：设置菜单图标"><span class="nav-number">2.2.2.</span> <span class="nav-text">第二步：设置菜单图标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三步：设置菜单页面"><span class="nav-number">2.2.3.</span> <span class="nav-text">第三步：设置菜单页面</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置侧边栏"><span class="nav-number">2.3.</span> <span class="nav-text">设置侧边栏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置头像"><span class="nav-number">2.4.</span> <span class="nav-text">设置头像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置侧边栏社交链接"><span class="nav-number">2.5.</span> <span class="nav-text">设置侧边栏社交链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步：设置链接"><span class="nav-number">2.5.1.</span> <span class="nav-text">第一步：设置链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步：设置链接图标"><span class="nav-number">2.5.2.</span> <span class="nav-text">第二步：设置链接图标</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启打赏功能"><span class="nav-number">2.6.</span> <span class="nav-text">开启打赏功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置站点建立时间"><span class="nav-number">2.7.</span> <span class="nav-text">设置站点建立时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#订阅微信公众号"><span class="nav-number">2.8.</span> <span class="nav-text">订阅微信公众号</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-OrangeEd1t"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">OrangeEd1t</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="true"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

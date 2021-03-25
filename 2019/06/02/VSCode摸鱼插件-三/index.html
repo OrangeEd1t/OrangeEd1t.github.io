@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: false,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="写在前面项目的源码我已传至GitHub欢迎clone。该项目是一个比较简单，适合新手入门的一个项目，项目结构简单不复杂。 项目结构与上篇文章的目录结构大致类似  我们仅需要关注红框标识部分 123456* package.json[文件]:该文件在上篇文章中已提到，此处不再赘述。* src[文件夹]:我们整个项目的存放目录。* Common[文件夹]:这里存放的是我们程序实现的主体。* test[">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VSCode摸鱼插件-三">
+<meta property="og:url" content="https://blog.orangehub.cn/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/index.html">
+<meta property="og:site_name" content="OrangeEd1t">
+<meta property="og:description" content="写在前面项目的源码我已传至GitHub欢迎clone。该项目是一个比较简单，适合新手入门的一个项目，项目结构简单不复杂。 项目结构与上篇文章的目录结构大致类似  我们仅需要关注红框标识部分 123456* package.json[文件]:该文件在上篇文章中已提到，此处不再赘述。* src[文件夹]:我们整个项目的存放目录。* Common[文件夹]:这里存放的是我们程序实现的主体。* test[">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.orangehub.cn/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/1559459317375.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/1559463239033.png">
+<meta property="og:image" content="https://blog.orangehub.cn/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/1560495124325.png">
+<meta property="article:published_time" content="2019-06-02T06:45:43.000Z">
+<meta property="article:modified_time" content="2021-03-25T08:36:18.844Z">
+<meta property="article:author" content="OrangeEd1t">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.orangehub.cn/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/1559459317375.png">
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="OrangeEd1t" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://blog.orangehub.cn/2019/06/02/VSCode摸鱼插件-三/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>VSCode摸鱼插件-三 | OrangeEd1t</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">OrangeEd1t</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.orangehub.cn/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="OrangeEd1t">
+      <meta itemprop="description" content="只要快乐！">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OrangeEd1t">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">VSCode摸鱼插件-三
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-02 14:45:43" itemprop="dateCreated datePublished" datetime="2019-06-02T14:45:43+08:00">2019-06-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-25 16:36:18" itemprop="dateModified" datetime="2021-03-25T16:36:18+08:00">2021-03-25</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>项目的源码我已传至<a href="https://github.com/OrangeEd1t/VSCode-MOYU" target="_blank" rel="noopener">GitHub</a>欢迎clone。该项目是一个比较简单，适合新手入门的一个项目，项目结构简单不复杂。</p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>与上篇文章的目录结构大致类似</p>
+<p><img src="/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/1559459317375.png" alt="1559459317375"></p>
+<p>我们仅需要关注红框标识部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">* package.json[文件]:该文件在上篇文章中已提到，此处不再赘述。</span><br><span class="line">* src[文件夹]:我们整个项目的存放目录。</span><br><span class="line">* Common[文件夹]:这里存放的是我们程序实现的主体。</span><br><span class="line">* test[文件夹]:这个文件夹里主要存放的测试需要的文件，可以不用去管它。</span><br><span class="line">* api.ts[文件]:这里存放的是获取数据的程序。</span><br><span class="line">* extension.ts[文件]:该文件在上篇文章中已提到，此处不再赘述。</span><br></pre></td></tr></table></figure>
+
+<h2 id="项目执行流程"><a href="#项目执行流程" class="headerlink" title="项目执行流程"></a>项目执行流程</h2><p><img src="/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/1559463239033.png" alt="1559463239033"></p>
+<h2 id="项目调试"><a href="#项目调试" class="headerlink" title="项目调试"></a>项目调试</h2><p>vscode插件的调试非常简单方便，只需要在需要调试的地方打个断点，然后按<code>F5</code>执行即可：</p>
+<p><img src="/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/1560495124325.png" alt="1560495124325"></p>
+<h2 id="项目发布"><a href="#项目发布" class="headerlink" title="项目发布"></a>项目发布</h2><p>vsCode的插件发布也是非常的建单的，主要有3种方法：</p>
+<ul>
+<li>直接把文件夹发给别人，别人找到vscode的插件存放目录并放进去，然后重启vscode。（不推荐）</li>
+<li>方法二：打包成vsix插件，然后发送给别人安装，如果你的插件涉及机密不方便发布到应用市场，可以尝试采用这种方式；</li>
+<li>方法三：注册开发者账号，发布到官网应用市场，这个发布和npm一样是不需要审核的。（推荐）</li>
+</ul>
+<p>采用什么方式发布，可以根据自己的需要来决定。</p>
+<p>具体参考该<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-publish.html" target="_blank" rel="noopener">文章</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="OrangeEd1t 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="OrangeEd1t 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/20/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%BA%8C/" rel="next" title="VSCode摸鱼插件-二">
+                <i class="fa fa-chevron-left"></i> VSCode摸鱼插件-二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/14/%E9%98%B2%E6%8A%96%E3%80%81%E8%8A%82%E6%B5%81%E3%80%81%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81/" rel="prev" title="防抖、节流、重绘与回流">
+                防抖、节流、重绘与回流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="OrangeEd1t" />
+            
+              <p class="site-author-name" itemprop="name">OrangeEd1t</p>
+              <p class="site-description motion-element" itemprop="description">只要快乐！</p>
+          </div>
+
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/orangeed1t" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:leedsym@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/orangeed1t" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.instagram.com/FaZe_OrangeEd1t/" target="_blank" title="Instagram"><i class="fa fa-fw fa-instagram"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目结构"><span class="nav-number">1.1.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目执行流程"><span class="nav-number">1.2.</span> <span class="nav-text">项目执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目调试"><span class="nav-number">1.3.</span> <span class="nav-text">项目调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目发布"><span class="nav-number">1.4.</span> <span class="nav-text">项目发布</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-OrangeEd1t"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">OrangeEd1t</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="true"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

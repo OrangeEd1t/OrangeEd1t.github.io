@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: false,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="写在前面最近在查漏补缺（其实就是菜），发现一段时间不学习后就会被新的知识所淘汰呢，只有不断地努力学习才能不断地提高自己。 今天我们就来讲一下最近前端的几个新名词：防抖、节流、重绘和回流。虽说是新名词，但并不是新技术。 防抖和节流概念（定义） 防抖：任务频繁触发的情况下，只有任务触发的间隔超过制定的时间间隔的时候，任务才会被执行。  节流：指定时间间隔内只会执行一次任务。   解释防抖这里引用了知乎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="防抖、节流、重绘与回流">
+<meta property="og:url" content="https://blog.orangehub.cn/2019/06/14/%E9%98%B2%E6%8A%96%E3%80%81%E8%8A%82%E6%B5%81%E3%80%81%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81/index.html">
+<meta property="og:site_name" content="OrangeEd1t">
+<meta property="og:description" content="写在前面最近在查漏补缺（其实就是菜），发现一段时间不学习后就会被新的知识所淘汰呢，只有不断地努力学习才能不断地提高自己。 今天我们就来讲一下最近前端的几个新名词：防抖、节流、重绘和回流。虽说是新名词，但并不是新技术。 防抖和节流概念（定义） 防抖：任务频繁触发的情况下，只有任务触发的间隔超过制定的时间间隔的时候，任务才会被执行。  节流：指定时间间隔内只会执行一次任务。   解释防抖这里引用了知乎">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-14T07:05:45.000Z">
+<meta property="article:modified_time" content="2021-03-25T08:36:18.872Z">
+<meta property="article:author" content="OrangeEd1t">
+<meta name="twitter:card" content="summary">
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="OrangeEd1t" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://blog.orangehub.cn/2019/06/14/防抖、节流、重绘与回流/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>防抖、节流、重绘与回流 | OrangeEd1t</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">OrangeEd1t</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.orangehub.cn/2019/06/14/%E9%98%B2%E6%8A%96%E3%80%81%E8%8A%82%E6%B5%81%E3%80%81%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="OrangeEd1t">
+      <meta itemprop="description" content="只要快乐！">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OrangeEd1t">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">防抖、节流、重绘与回流
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-14 15:05:45" itemprop="dateCreated datePublished" datetime="2019-06-14T15:05:45+08:00">2019-06-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-25 16:36:18" itemprop="dateModified" datetime="2021-03-25T16:36:18+08:00">2021-03-25</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>最近在查漏补缺（其实就是菜），发现一段时间不学习后就会被新的知识所淘汰呢，只有不断地努力学习才能不断地提高自己。</p>
+<p>今天我们就来讲一下最近前端的几个新名词：防抖、节流、重绘和回流。虽说是新名词，但并不是新技术。</p>
+<h1 id="防抖和节流"><a href="#防抖和节流" class="headerlink" title="防抖和节流"></a>防抖和节流</h1><h2 id="概念（定义）"><a href="#概念（定义）" class="headerlink" title="概念（定义）"></a>概念（定义）</h2><ul>
+<li><p><strong>防抖：任务频繁触发的情况下，只有任务触发的间隔超过制定的时间间隔的时候，任务才会被执行。</strong></p>
+</li>
+<li><p><strong>节流：指定时间间隔内只会执行一次任务。</strong></p>
+</li>
+</ul>
+<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><h3 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h3><p>这里引用了知乎上的一段示例代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>防抖<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"debounce"</span>&gt;</span>点我防抖！<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="actionscript">      <span class="comment">// 1、获取这个按钮，并绑定事件</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> myDebounce = <span class="built_in">document</span>.getElementById(<span class="string">"debounce"</span>);</span></span><br><span class="line"><span class="actionscript">      myDebounce.addEventListener(<span class="string">"click"</span>, debounce(sayDebounce));</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 2、防抖功能函数，接受传参</span></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">debounce</span><span class="params">(fn)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">      <span class="comment">// 4、创建一个标记用来存放定时器的返回值</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> timeout = <span class="literal">null</span>;</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 5、每次当用户点击/输入的时候，把前一个定时器清除</span></span></span><br><span class="line">        clearTimeout(timeout);</span><br><span class="line"><span class="actionscript">        <span class="comment">// 6、然后创建一个新的 setTimeout，</span></span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 这样就能保证点击按钮后的 interval 间隔内</span></span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 如果用户还点击了的话，就不会执行 fn 函数</span></span></span><br><span class="line"><span class="javascript">        timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line">          fn();</span><br><span class="line">        &#125;, 1000);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 3、需要进行防抖的事件处理</span></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">sayDebounce</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">      <span class="comment">// ... 有些需要防抖的工作，在这里执行</span></span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">"防抖成功！"</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们来理解一下代码：</p>
+<ol>
+<li>我们点击页面上的按钮，执行 <code>debounce</code>函数，并传入参数<code>sayDebounce</code></li>
+<li>在函数<code>debounce</code>中返回了一个匿名函数，并在匿名函数中定义了一个定时器。</li>
+<li>执行匿名函数时，先清除定时器，然后再创建一个新的定时器。</li>
+<li>延时1秒执行传入的函数<code>sayDebounce()</code></li>
+</ol>
+<p>程序大致的执行过程已经介绍完了，整个防抖程序的关键就在于第3步中。</p>
+<p>为什么这么说呢？</p>
+<p>因为，我们每次点击都会去执行匿名函数，匿名函数每次执行前都会去清除一次定时器，然后再重新定义定时器。这样做就会让函数永远都只会在满足定时器制定的时间间隔后才会执行。（可能这样说有点不恰当）。我们改造一下这个<code>sayDebounce</code>函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayDebounce</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="comment">//console.log("防抖成功！");</span></span><br><span class="line">	<span class="keyword">let</span> myDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">	<span class="keyword">let</span> mytime=myDate.toLocaleTimeString();</span><br><span class="line">	<span class="built_in">console</span>.log(myDate.toLocaleString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们再次执行程序的时候控制台打印出来的时间永远都是我们最后一次点击的时间加上1秒（不考虑程序执行时间）。</p>
+<p><strong>举个栗子：</strong></p>
+<p>假设，我今天要去抢手机，手机早上11点整开售，我们10点59分50秒进去疯狂点击，但是由于抢购按钮采用了防抖，且时间间隔为1秒，那么无论我们手速多块，一秒点多少次，都是无效的。因为程序根本不会执行到抢购程序那里，所以最好的抢购时机就是10点59分59秒的时候点击，那么11点整的时候正好执行了抢购程序（不考虑程序执行时间）。</p>
+<h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h3><p>同样，这里也是引用了知乎的一个示例代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>节流<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"throttle"</span>&gt;</span>点我节流！<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="actionscript">      <span class="comment">// 1、获取按钮，绑定点击事件</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> myThrottle = <span class="built_in">document</span>.getElementById(<span class="string">"throttle"</span>);</span></span><br><span class="line"><span class="actionscript">      myThrottle.addEventListener(<span class="string">"click"</span>, throttle(sayThrottle));</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 2、节流函数体</span></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">throttle</span><span class="params">(fn)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">      <span class="comment">// 4、通过闭包保存一个标记</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> canRun = <span class="literal">true</span>;</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 5、在函数开头判断标志是否为 true，不为 true 则中断函数</span></span></span><br><span class="line">        if(!canRun) &#123;</span><br><span class="line"><span class="actionscript">          <span class="keyword">return</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="actionscript">        <span class="comment">// 6、将 canRun 设置为 false，防止执行之前再被执行</span></span></span><br><span class="line"><span class="actionscript">        canRun = <span class="literal">false</span>;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 7、定时器</span></span></span><br><span class="line"><span class="javascript">        setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line">          fn();</span><br><span class="line"><span class="actionscript">          <span class="comment">// 8、执行完事件（比如调用完接口）之后，重新将这个标志设置为 true</span></span></span><br><span class="line"><span class="actionscript">          canRun = <span class="literal">true</span>;</span></span><br><span class="line">        &#125;, 1000);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 3、需要节流的事件</span></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">sayThrottle</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">"节流成功！"</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们首先来解释一下代码：</p>
+<ol>
+<li>我们点击页面上的按钮，执行 <code>throttle</code>函数，并传入参数<code>sayThrottle</code></li>
+<li>在函数<code>throttle</code>中定义了一个bool变量<code>canRun</code>，赋值为true；还返回了一个匿名函数。</li>
+<li>在执行匿名函数时，先判断<code>canRun</code>，若值为false,则<code>return</code>，反之赋值<code>canRun</code>赋值为false，然后再创建一个定时器。</li>
+<li>在定时器中延时1秒执行传入的函数<code>sayThrottle()</code>，并将<code>canRun</code>的值赋为true。</li>
+</ol>
+<p>程序的大致执行过程已经介绍完了，整个节流程序中核心步骤在第3步与第4步中。</p>
+<p>每次我们点击按钮，程序都会去执行匿名函数。在执行匿名函数中的定时器之前，程序会先去判断<code>canRun</code>的值，若值为false，则直接退出程序。反之才会执行定时器。即，程序第一次执行完之前，该程序是无法继续去执行第二次的。我们改造一下这个<code>sayThrottle</code>函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayThrottle</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//console.log("节流成功！");</span></span><br><span class="line">	<span class="keyword">let</span> myDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">	<span class="keyword">let</span> mytime=myDate.toLocaleTimeString();</span><br><span class="line">	<span class="built_in">console</span>.log(myDate.toLocaleString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们再次执行程序的时候在控制台会依次打印出前一次成功执行后第一个点击的时间（有点绕）。比如，我2019-06-14 10:00:00第一次点击，然后我疯狂点击，比如在10:00:00到10:00:01这一秒内我点了100次，但是控制台最终只会打印出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2019-06-14 10:00:00</span><br><span class="line">2019-06-14 10:00:01</span><br></pre></td></tr></table></figure>
+
+<p><strong>举个栗子：</strong></p>
+<p>跟前面一样。假设，我今天要去抢手机，手机早上11点整开售，我们10点59分50秒进去疯狂点击，但是由于抢购按钮采用了节流，且时间间隔为1秒，那么无论我们手速多块，一秒点多少次，都是无效的。因为程序只会在50秒的时候出发，51秒执行完成，完成后因为我们点的速度很快，程序立马又继续被触发。所以无论我们50-51秒内点击了多少次都不会影响程序的正常执行的（不考虑程序执行时间）。</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>函数节流不管事件触发有多频繁，都会保证在规定时间内一定会执行一次真正的事件处理函数，而函数防抖只是在最后一次事件后才触发一次函数。 比如在页面的无限加载场景下，我们需要用户在滚动页面时，每隔一段时间发一次 Ajax 请求，而不是在用户停下滚动页面操作时才去请求数据。这样的场景，就适合用节流技术来实现。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong>函数防抖：</strong>将多次操作合并为一次操作进行。原理是维护一个计时器，规定在一定时间后触发函数，但是在规定时间内再次触发的话，就会取消之前的计时器而重新设置。这样一来，只有最后一次操作能被触发。</li>
+<li><strong>函数节流：</strong>使得一定时间内只触发一次函数。原理是通过判断是否有延迟调用函数未执行。</li>
+<li>函数防抖属于<strong>阻止函数继续执行</strong>，函数节流属于<strong>稀释函数执行频率</strong>。</li>
+</ul>
+<h1 id="重绘和回流"><a href="#重绘和回流" class="headerlink" title="重绘和回流"></a>重绘和回流</h1><h2 id="概念（定义）-1"><a href="#概念（定义）-1" class="headerlink" title="概念（定义）"></a>概念（定义）</h2><ul>
+<li><p><strong>重绘(repaint)：当元素样式的改变不影响布局时，浏览器将使用重绘对元素进行更新，此时由于只需要 UI 层面的重新像素绘制。</strong></p>
+</li>
+<li><p><strong>回流(reflow)：又叫重排（layout），当元素的尺寸、结构或者触发某些属性时，浏览器会重新渲染页面，称为回流。此时，浏览器需要重新经过计算，计算后还需要重新页面布局。</strong></p>
+</li>
+</ul>
+<h2 id="常见操作"><a href="#常见操作" class="headerlink" title="常见操作"></a>常见操作</h2><ul>
+<li>重绘：<ul>
+<li>改变元素颜色</li>
+<li>改变元素背景色</li>
+<li>……</li>
+</ul>
+</li>
+<li>回流：<ul>
+<li>页面首次渲染时</li>
+<li>浏览器窗口大小改变</li>
+<li>元素尺寸、位置和内容发生改变</li>
+<li>字体大小的变化</li>
+<li>添加或删除DOM元素</li>
+<li>激活CSS伪类</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意：回流必定会触发重绘，重绘不一定会触发回流。重绘的开销较小，回流的代价较高。</strong></p>
+<h2 id="与防抖和节流的关系"><a href="#与防抖和节流的关系" class="headerlink" title="与防抖和节流的关系"></a>与防抖和节流的关系</h2><p>为什么需要 <strong>节流</strong>？它与回流有什么关系？</p>
+<p>因为有些事情会造成浏览器的 <strong>回流</strong>，而 <strong>回流</strong> 会使浏览器开销增大，所以我们通过 <strong>节流</strong> 来防止这种增大浏览器开销的事情。</p>
+<p><strong>举个栗子：</strong></p>
+<p>页面上有个 div 框，用户可以在 input 框中输入 div 框的一些信息，例如宽、高等，输入完毕立即改变属性。但是，因为改变之后还要随时存储到数据库中，所以需要调用接口。如果不加限制，每输入完一个属性后都会造成一次回流和一次接口的调用，这样会大大增加浏览器的开销。</p>
+<h2 id="如何减少使用"><a href="#如何减少使用" class="headerlink" title="如何减少使用"></a>如何减少使用</h2><p>既然重绘和回流都会增加浏览器的开销，那么我们因该怎样去避免大量使用他们呢？</p>
+<ul>
+<li>避免频繁操作样式，可汇总后统一一次修改</li>
+<li>尽量使用 class 进行样式修改，而不是直接操作样式</li>
+<li>减少 DOM 的操作，可使用字符串一次性插入</li>
+</ul>
+<p>做到这三点，就可以大大减少回流与重绘的使用。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="OrangeEd1t 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="OrangeEd1t 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/02/VSCode%E6%91%B8%E9%B1%BC%E6%8F%92%E4%BB%B6-%E4%B8%89/" rel="next" title="VSCode摸鱼插件-三">
+                <i class="fa fa-chevron-left"></i> VSCode摸鱼插件-三
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/10/npm%E4%BE%9D%E8%B5%96%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E3%80%81%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4/" rel="prev" title="npm依赖包的安装、更新和删除">
+                npm依赖包的安装、更新和删除 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="OrangeEd1t" />
+            
+              <p class="site-author-name" itemprop="name">OrangeEd1t</p>
+              <p class="site-description motion-element" itemprop="description">只要快乐！</p>
+          </div>
+
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/orangeed1t" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:leedsym@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/orangeed1t" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.instagram.com/FaZe_OrangeEd1t/" target="_blank" title="Instagram"><i class="fa fa-fw fa-instagram"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#防抖和节流"><span class="nav-number">2.</span> <span class="nav-text">防抖和节流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念（定义）"><span class="nav-number">2.1.</span> <span class="nav-text">概念（定义）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释"><span class="nav-number">2.2.</span> <span class="nav-text">解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#防抖"><span class="nav-number">2.2.1.</span> <span class="nav-text">防抖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节流"><span class="nav-number">2.2.2.</span> <span class="nav-text">节流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">2.3.</span> <span class="nav-text">区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重绘和回流"><span class="nav-number">3.</span> <span class="nav-text">重绘和回流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念（定义）-1"><span class="nav-number">3.1.</span> <span class="nav-text">概念（定义）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见操作"><span class="nav-number">3.2.</span> <span class="nav-text">常见操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与防抖和节流的关系"><span class="nav-number">3.3.</span> <span class="nav-text">与防抖和节流的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何减少使用"><span class="nav-number">3.4.</span> <span class="nav-text">如何减少使用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-OrangeEd1t"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">OrangeEd1t</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="true"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
