@@ -31,17 +31,17 @@ date: 2018-12-11 16:14:33
 
 ## 注册账号
 
-![1544518834038](VPS购买-搭建以及BBR安装指南/1544518834038.png)
+![1544518834038](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151349.png)
 
 填写你的e-mail地址和密码，然后创建一个账号，可能会需要你验证邮箱什么的，跟着操作就好咯，这里就不赘述了。
 
 ## 激活账号
 
-![1544519242815](VPS购买-搭建以及BBR安装指南/1544519242815.png)
+![1544519242815](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151403.png)
 
 登陆进去后点击左边菜单栏的Billing 选择 Alipay(支付宝)或者 WeChat Pay(微信)付款10刀才能激活账户，差不多够用两个多月左右(3.5刀/月)，激活完成后点击右上角的进行服务器的购买
 
-![1544519460115](VPS购买-搭建以及BBR安装指南/1544519460115.png)
+![1544519460115](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151354.png)
 
 ## 服务器选择
 
@@ -49,31 +49,31 @@ date: 2018-12-11 16:14:33
 
 ### 选择服务器位置
 
-![1544519710470](VPS购买-搭建以及BBR安装指南/1544519710470.png)
+![1544519710470](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151356.png)
 
 > 理论上：离你越近越好，通常选择tokyo节点
 
 ### 选择系统
 
-![1544519790062](VPS购买-搭建以及BBR安装指南/1544519790062.png)
+![1544519790062](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151418.png)
 
 > 推荐选择 CentOs7
 
 ### 选择配置
 
-![1544520138453](VPS购买-搭建以及BBR安装指南/1544520138453.png)
+![1544520138453](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151421.png)
 
 > 由于2.5刀的配置只有ipv6，我们这里选择3.5刀的配置，这两个配置的区别就是一个没有ipv4一个有ipv4，由于ipv6不稳定，建议选择3.5刀的配置。
 
 ### 提交
 
-![1544520311688](VPS购买-搭建以及BBR安装指南/1544520311688.png)
+![1544520311688](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151425.png)
 
 > 选择好了之后，我们点击下面的 Deploy Now 就OK啦~
 
 至此，服务器就已经购买完成啦，我们回到控制台界面。
 
-![1544520544494](VPS购买-搭建以及BBR安装指南/1544520544494.png)
+![1544520544494](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151432.png)
 
 这里就是你购买的服务器啦，下面我们开始搭建VPS
 
@@ -81,7 +81,7 @@ date: 2018-12-11 16:14:33
 
 点击你的服务器，进入服务器详细页面
 
-![1544520682232](VPS购买-搭建以及BBR安装指南/1544520682232.png)
+![1544520682232](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151436.png)
 
 > IP Address:你的IP地址
 >
@@ -95,7 +95,7 @@ date: 2018-12-11 16:14:33
 
 我们在电脑上(win10)呼出cmd（win+r => 输入cmd => 回车）
 
-![1544520954626](VPS购买-搭建以及BBR安装指南/1544520954626.png)
+![1544520954626](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151439.png)
 
 打开就是这样的，下面我们通过ssh登入服务器
 
@@ -109,7 +109,7 @@ ssh 用户名@ip地址
 
 > 密码不会显示出
 
-![1544521317476](VPS购买-搭建以及BBR安装指南/1544521317476.png)
+![1544521317476](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151443.png)
 
 这样表示已经登录成功了。
 
@@ -124,27 +124,27 @@ wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.
 sh shadowsocks-all.sh
 ```
 
-![1544599074840](VPS购买-搭建以及BBR安装指南/1544599074840.png)
+![1544599074840](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151446.png)
 
 > 选择你要安装的Shadowsocks版本，默认Python版
 
-![1544599114008](VPS购买-搭建以及BBR安装指南/1544599114008.png)
+![1544599114008](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151449.png)
 
 > 输入你的ShadowSocks密码，默认 teddysun.com
 
-![1544599239382](VPS购买-搭建以及BBR安装指南/1544599239382.png)
+![1544599239382](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151452.png)
 
 > 选择你的端口，默认10120端口
 
-![1544599281527](VPS购买-搭建以及BBR安装指南/1544599281527.png)
+![1544599281527](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151455.png)
 
 > 选择你的混淆方式，默认aes-256-gcm，这里建议选择aes-256-cfb的方式，只需要输入对应的序号即可
 
-![1544599370670](VPS购买-搭建以及BBR安装指南/1544599370670.png)
+![1544599370670](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151458.png)
 
 > 全部选择完成后，再按下回车就开始安装了。
 
-![1544599424944](VPS购买-搭建以及BBR安装指南/1544599424944.png)
+![1544599424944](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151504.png)
 
 > 安装完成后，脚本提示安装成功。
 
@@ -162,7 +162,7 @@ https://github.com/shadowsocksrr/shadowsocksr-csharp/releases
 
 打开你下载的客户端，在你的控制栏找到一个小飞机的图标，然后单击鼠标右键=>服务器=>编辑服务器=>添加
 
-![1544599985925](VPS购买-搭建以及BBR安装指南/1544599985925.png)
+![1544599985925](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151520.png)
 
 依次输入你的ip地址，端口，密码以及加密方式，然后点击确定
 
@@ -179,7 +179,7 @@ yum install curl vim -y
 bash <(curl -L -s https://install.direct/go.sh)
 ```
 
-![v2ray1](VPS购买-搭建以及BBR安装指南/v2ray1.png)
+![v2ray1](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151523.png)
 
 > 当出现上图的界面时，表示安装成功，此时需要复制出图中红框标注的信息备用。
 
@@ -192,7 +192,7 @@ systemctl start v2ray
 systemctl status v2ray
 ```
 
-![v2ray2](VPS购买-搭建以及BBR安装指南/v2ray2.png)
+![v2ray2](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151526.png)
 
 > 出现上图界面时，表示v2ray已成功启动了。
 
@@ -232,7 +232,7 @@ ufw disable
 
 在github上面下载完成后解压
 
-![v2ray3](VPS购买-搭建以及BBR安装指南/v2ray3.png)
+![v2ray3](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151530.png)
 
 > 文件目录大致是这样，双击运行红框的.exe文件
 
@@ -240,11 +240,11 @@ ufw disable
 
 > 启动成功后，在任务栏会有这样一个图标，双击图标显示软件主界面
 
-![v2ray5](VPS购买-搭建以及BBR安装指南\v2ray5.png)
+![v2ray5](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151533.png)
 
 > 点击服务器->添加[vmess]服务器
 
-![v2ray6](VPS购买-搭建以及BBR安装指南\v2ray6.png)
+![v2ray6](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151536.png)
 
 > 依次输入：服务器IP、端口、用户ID、额外ID、加密方式、传输协议等信息。
 
@@ -254,7 +254,7 @@ ufw disable
 
 **额外ID、加密方式和传输协议按照图片中填写即可**
 
-![v2ray7](VPS购买-搭建以及BBR安装指南\v2ray7.png)
+![v2ray7](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151539.png)
 
 配置完成后，回车启用就可以开始网上重浪了。
 

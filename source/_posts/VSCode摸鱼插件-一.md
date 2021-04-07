@@ -1,5 +1,5 @@
 ---
-title: VSCode摸鱼插件(一)
+title: VSCode摸鱼插件-一
 date: 2019-04-04 12:10:41
 ---
 

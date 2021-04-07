@@ -24,11 +24,11 @@ date: 2018-10-24 10:04:20
 
   验证nodejs安装完成
 
-  ![1540299351039](搭建hexo博客\1540299351039.png)
+  ![1540299351039](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150809.png)
 
   验证npm安装完成
 
-  ![1540299452529](搭建hexo博客\1540299452529.png)
+  ![1540299452529](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151000.png)
 
 * git
 
@@ -36,7 +36,7 @@ date: 2018-10-24 10:04:20
 
   验证git安装完成
 
-  ![1540301271333](搭建hexo博客\1540301271333.png)
+  ![1540301271333](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150814.png)
 
 ## 搭建博客
 
@@ -51,7 +51,7 @@ date: 2018-10-24 10:04:20
 
 因为需要多终端同步，所以我们先在github上搭建一个空的仓库
 
-![1540306983824](搭建hexo博客\1540306983824.png)
+![1540306983824](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150818.png)
 
 **因为我已经创建了这个仓库，所以报错咯，这个不必在意的哟~**
 
@@ -67,7 +67,7 @@ date: 2018-10-24 10:04:20
 git clone 
 ```
 
-![1540307360822](搭建hexo博客\1540307360822.png)
+![1540307360822](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150823.png)
 
 然后我们进入到刚刚克隆好的仓库呢
 
@@ -81,7 +81,7 @@ cd OrangeEd1t.github.io/
 ll -a
 ```
 
-![1540307757097](搭建hexo博客\1540307757097.png)
+![1540307757097](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150827.png)
 
 ### 清空当前文件夹
 
@@ -89,7 +89,7 @@ ll -a
 
 再次查看文件夹里有什么呢
 
-![1540307804430](搭建hexo博客\1540307804430.png)
+![1540307804430](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150830.png)
 
 ### 创建并切换到hexo分支上
 
@@ -97,7 +97,7 @@ ll -a
 
 在本地上使用`git branch`查看只有`master`一个分支。使用`git checkout -b hexo`创建`hexo`分支并将其作为默认分支。
 
-![1540308890583](搭建hexo博客\1540308890583.png)
+![1540308890583](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150833.png)
 
 创建并切换分支成功，下面我们进行hexo的安装。
 
@@ -117,7 +117,7 @@ hexo init
 
 初始化完成后的文件夹目录
 
-![1540309493303](搭建hexo博客\1540309493303.png)
+![1540309493303](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150836.png)
 
 然后，我们依次执行
 
@@ -128,17 +128,17 @@ npm install hexo-deployer-git --save
 
 执行完成后的文件夹目录
 
-![1540309611867](搭建hexo博客\1540309611867.png)
+![1540309611867](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150840.png)
 
 这时，我们将刚刚拷贝出去的文件再拷贝到当前文件夹中
 
 拷贝后的文件夹目录
 
-![1540309705579](搭建hexo博客\1540309705579.png)
+![1540309705579](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150843.png)
 
 接着，我们打开_config.yml 文件，并修改
 
-![1540309840145](搭建hexo博客\1540309840145.png)
+![1540309840145](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150846.png)
 
 > repository代表的是你博客生成的html文件存放仓库的ssh地址，建议输入ssh地址
 >
@@ -161,14 +161,14 @@ hexo g -d
 
 master分支：存放博客生成的html文件
 
-![1540310418808](搭建hexo博客\1540310418808.png)
+![1540310418808](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150849.png)
 
 hexo分支：存放博客的配置文件
-![1540310453971](搭建hexo博客\1540310453971.png)
+![1540310453971](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150855.png)
 
 接着，我们修改下仓库的默认分支，设置默认分支为hexo分支。
 
-![1540310573407](搭建hexo博客\1540310573407.png)
+![1540310573407](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150858.png)
 
 好啦，现在我们就可以通过自己的仓库名字访问博客了哦！
 
@@ -208,20 +208,20 @@ npm install hexo-deployer-git --save
 
 域名购买好之后进入控制台->云解析 点击【解析】
 
-![1540311028177](搭建hexo博客\1540311028177.png)
+![1540311028177](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150903.png)
 
-![1540348890786](搭建hexo博客\1540348890786.png)
+![1540348890786](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150906.png)
 
 ### 设置CNAME
 
 在你博客的项目下，`source` 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：
 
-![1540311481069](搭建hexo博客\1540311481069.png)
+![1540311481069](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150910.png)
 
 在 github 上面，打开 项目的（Settings）设置，然后在 `GitHub Pages`的 `Custom domain`设置里填上购买的域名。比如：
 
 
 
-![1540311607064](搭建hexo博客\1540311607064.png)
+![1540311607064](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407150912.png)
 
 然后就大功告成啦，现在你的博客已经支持多终端同步和域名访问啦！

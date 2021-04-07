@@ -49,7 +49,7 @@ timezone: #时区
 
 查看路径：你博客根目录\themes\next\languages
 
-![1540970156283](Next主题配置/1540970156283.png)PS：这里提一下，你使用`hexo s`预览的时候，你会发现是设置了语言之后界面还是英文，这个时候不要慌，使用`hexo clean`清理下database文件夹以及public文件夹就行了。然后再使用`hexo s` 预览。事实上，这个方法在遇到很多问题的时候都是通用的。
+![1540970156283](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151707.png)PS：这里提一下，你使用`hexo s`预览的时候，你会发现是设置了语言之后界面还是英文，这个时候不要慌，使用`hexo clean`清理下database文件夹以及public文件夹就行了。然后再使用`hexo s` 预览。事实上，这个方法在遇到很多问题的时候都是通用的。
 
 ### 设置菜单
 
@@ -92,7 +92,8 @@ menu_settings:
 ​	以上两步都完成后，你打开博客，选择其他菜单的时候，会发现根本打不开呢。不要慌，这种情况一般是因为你没有对应的页面，所以打不开呢。我们只需要在我们博客根目录打开 Git Bash并输入：
 
 ``` bash
-
+hexo new page 'tags'
+hexo new page 'categories'
 ```
 
 在你的网站根目录下面的source文件夹会分别生成tags、categories以及about文件夹。
@@ -139,7 +140,7 @@ sidebar:
   display: post
 ```
 
-![1540973091086](Next主题配置/1540973091086.png)
+![1540973091086](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151715.png)
 
 ### 设置头像
 
@@ -150,7 +151,7 @@ sidebar:
 | 完整的互联网 |            `URI`:`http://example.com/avatar.png`             |
 | 站点内的地址 | 将头像放置主题目录下的`source/uploads/`（新建 `uploads` 目录若不存在） 配置为：`avatar: /uploads/avatar.png`或者 放置在 `source/images/ 目录下`, 配置为：`avatar: /images/avatar.png` |
 
-![1540973457373](Next主题配置/1540973457373.png)
+![1540973457373](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151718.png)
 
 ### 设置侧边栏社交链接
 
@@ -179,7 +180,7 @@ sidebar:
   #Skype: skype:yourname?call|chat || skype
 ```
 
-![1540974064306](Next主题配置/1540974064306.png)
+![1540974064306](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151722.png)
 
 #### 第二步：设置链接图标
 
@@ -201,7 +202,7 @@ social_icons:
   exturl: false
 ```
 
-![1540974446321](Next主题配置/1540974446321.png)
+![1540974446321](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151725.png)
 
 ### 开启打赏功能
 
@@ -219,7 +220,7 @@ bitcoin: #比特币收款二维码图片地址
 
 同一个文件搜索`since`字段，并设置相应的年份
 
-![1540974795661](Next主题配置/1540974795661.png)
+![1540974795661](https://typora-img-1252867373.cos.ap-chengdu.myqcloud.com/20210407151728.png)
 
 ### 订阅微信公众号
 
